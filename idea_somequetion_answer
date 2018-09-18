@@ -1,0 +1,5 @@
+how to change project to maven project idea
+
+right-click the module ,select framework support...
+and check maven technology,if find hard,
+you can input keyword to seacher

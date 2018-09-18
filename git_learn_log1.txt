@@ -1,0 +1,81 @@
+#The following are common commands for git 
+
+# it can set user information.
+git config --global user.name "zhangsan"
+git config --global user.email "xxx@qq.com"
+
+#it can make a git  repository in a empty dir
+git init
+
+
+#it can add file to a temp workspace
+git add a.txt 
+
+#it can commit file to repository and attach notes
+git commit a.txt -m 'it is nothing'
+
+#it can look git status 
+git status
+
+
+#you will look detail about file changes ,you need it
+git diff readme.txt
+
+#if you want to look git log
+git log
+
+#if you think log  is in a mess
+git log --pretty=oneline
+
+#ok, now you can back to history version about your file
+#I need say f275890 is a version history about file,different
+git reset --hard f2758g0
+git reset --hard HEAD^
+
+#log sometime is useless.please use reflog
+git reflog
+
+#everyone has some mistake,we should changes
+#if your file is modity ,but it is not your want
+git checkout readme.txt
+
+#if your file is in temp workspace,please reset
+git reset HEAD readme.txt
+
+#if your want to delete file,or remove it 
+#in fact ,this command only has function in temp workspace 
+git rm readme.txt
+
+#next,we should to make a ssh-key ,for next step
+ssh-keygen -t rsa -C "*@163.com"
+
+#now if you want to upload to cloud-server,
+#first you need create repository ,you can go to github,login and create it
+#second,you need connect your local repository and github repository
+git remote and origin git@*.git 
+#next,your need to upload
+git push -u  origin master
+git push origin master
+
+#just now is a methon ,we create a local repository first,and connect it to  cloud repository . now we contrary it 
+git clone git@*.git
+
+#look all branch
+git branch 
+
+#create a branch
+git branch test-branch
+
+#swith branch
+git checkout test-branch
+
+#quick create branch and switch to it
+git checkout -b test-branch
+
+#union other branch on master-branch
+git merge test-branch
+
+#delete a branch
+git branch -d test-branch
+
+

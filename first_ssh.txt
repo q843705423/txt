@@ -1,0 +1,9 @@
+if you are first to connect the server.
+then,you can use the system ssh to connect it
+you can use command like this:
+ssh root:123456@123.456.789
+in fact,the root is the user in server,and 123456 is password,
+it split by :
+and last is server ip.
+it is import
+and now,you can controller the server.

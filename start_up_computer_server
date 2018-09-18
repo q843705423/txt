@@ -1,0 +1,1 @@
+sudo update-rc.d server.sh default

@@ -1,0 +1,7 @@
+#this is a command to add your public key to the server
+#if you do it, you can log in server don't input password
+scp ~/.ssh/id_rsa.pub root@www.skybuff.com:/root/.ssh/authorized_keys
+
+#how to get the id_rsa.pub 
+#in fact,your only need 
+ssh-keygen -t rsa

@@ -1,0 +1,87 @@
+ctrl+alt+shift+n   
+alt shift C
+ctrl + space
+ctrl + `
+ctrl + shift + enter
+ctrl + shift + i
+ctrl + alt + shift + c
+alt + up ,alt + down
+alt shift + F10
+alt shift + R
+alt + home
+ctrl + alt + F7
+ctrl + shift + A
+ctrl + alt + shift + I
+ctrl + shift + Enter
+alt + shift + O
+ctrl + F / ctrl +space
+alt + shift + O
+alt + enter
+
+
+I think it will be very useful quick-key,
+about
+Alt+1,if your don't want to use mouse,it is very nessery.
+you can use the commond to shift your view in code view and project view.
+please trust me, it can help your chance file so quickly.
+but if your want to quick find file, a new quick-key is more useful.
+it is Ctrl+Shift+N
+but if your use idea+vim,it is unuseful.
+so let me talk your other key-map
+because I like vim,so I don't want to loss vim feature.
+some useful vim commond if inflict with vim quick-key.
+like 0 ^ $ 
+it can move to line begin or end,it is very useful in this 
+like gg G 
+it  can move in file begin or end
+like v 
+we can go to model of visable view.
+like yy p 
+we can copy and paste.
+like w e b 
+we can go to pre or next word.
+like f  t 
+we can go to somewhere we want 
+like a i o O
+we can go to write model
+like d c x
+we can delete or replace word or case
+like u
+we can un do last command
+--------------------------------------------------
+up is my vim commond
+and follow is about my idea config
+---------------------------------------------------
+ctrl + F4 
+ctrl + shift + w
+you can delete the window about it 
+ctrl + shift + F4 
+you can delete all the open file 
+shift + shift
+you can open a seacher small window and can find file and open it
+alt + home 
+you can open menu ,and move it use up,down,left,right
+ctrl + shift + alt + l
+you can use this command,and make you  code beautiful
+alt + insert 
+I think if your don't like this key quick ,you must be mad
+
+#how to create a file 
+alt + insert
+
+#how to delete file 
+delete 
+
+#how to change name of file 
+
+
+
+#how to go to (  { [
+%
+
+
+#how to open the menu.
+alt+f ,alt+e
+
+how to jump function 
+ctrl+ ]

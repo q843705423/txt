@@ -1,0 +1,19 @@
+in the txt,I will talk your how to open ssr server.
+we all know,ssr server can help our go to visit some
+website that we can't visit.
+first,
+we need to connect the server
+in the first connect ,we need use command like this,
+----------------------------------------------
+ssh user:pass"@ip
+---------------------------------------------
+and then,
+we should download the ssr server on server.
+it more information,we can look the url:
+https://github.com/shadowsocks/shadowsocks/tree/master
+or do follow thing,
+if your area centos,
+---------------------------------
+yum install git
+-----------------------------------
+

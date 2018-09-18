@@ -1,0 +1,25 @@
+{
+    "server": "207.246.105.159",
+    "server_ipv6": "::",
+    "server_port": 7777,
+    "local_address": "127.0.0.1",
+    "local_port": 3333,
+
+    "password": "7777",
+    "method": "rc4-md5",
+    "protocol": "auth_sha1_v4",
+    "protocol_param": "",
+    "obfs": "http_post",
+    "obfs_param": "",
+    "speed_limit_per_con": 0,
+    "speed_limit_per_user": 0,
+
+    "additional_ports" : {}, // only works under multi-user mode
+    "additional_ports_only" : false, // only works under multi-user mode
+    "timeout": 120,
+    "udp_timeout": 60,
+    "dns_ipv6": false,
+    "connect_verbose_info": 0,
+    "redirect": "",
+    "fast_open": false
+}

@@ -1,0 +1,4 @@
+fleet , this is 分布式init系统
+Flannel is a util in coreOS to sovle network problem in machine and machine.
+etcd key-value repository,service find.
+cond  config manager 

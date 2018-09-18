@@ -1,0 +1,78 @@
+move operation
+
+l j k l
+left up down right
+
+
+ctrl+E
+ctrl+Y
+ctrl+F
+ctrl+B
+
+#High, move cursor to the high position of the window
+H
+#Middle ,move cursor to the middle of the window
+M
+#Low,move cursor to the low position of the window
+L
+
+#go to top of file
+gg
+
+-----------------
+text object
+w - words
+s - sentences
+p - paragraphs
+t - tags
+
+motions
+a - all
+i - in
+t - 'til
+f - find forward
+F - find backward
+
+d - delte(and cut )
+c - change(delete,then place insert mode)
+y - yank(copy)
+v - visually select
+--------------------
+{command}{text object or motion}
+diw   delte in word
+caw change all word
+yi) yank all text inside parentheses
+di[   delete and insert [ content
+da[   delete all [ context
+dt_   delete until _
+df_   delete until _ and contain _
+va"   visually select all inside doublequotes Including doublequotes
+ci' 
+----------------------------
+repetition the dot command
+.
+--------------------------------
+dd/yy delete or copy the current line
+D/C  delete /change until end of the line
+^/$ move to the begining /end of the line 
+I/A move to the beginining/end of line and insert
+o/O insert new line above/below current line and insert 
+?vsiw  v in word
+
+22:38
+
+record a macro
+@q q
+
+
+plugins
+vundle -plugin manager
+nerdtree - file drawer
+ctrlp - fuzzy file finder
+fugitvive - git tool
+sysntastic -syntax checker/linter
+
+how to copy code to other place rathan vim
+your need to use this command
+"+yy
+we all know yy is to yank(copy) and "+ is + register

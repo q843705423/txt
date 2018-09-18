@@ -1,0 +1,36 @@
+the txt is to introduce of v2ray install method in ubuntu system.
+
+server need to install v2ray,and client is same method.
+----------------------------------
+wget https://install.direct/go.sh
+----------------------------------
+
+and then,we need to rewrite config txt
+-------------------------
+vi /etc/v2ray/config.json
+-------------------------
+
+next,we need to start it,it is do in server. 
+----------------------------
+sudo systemctl start v2ray
+sudo systemctl stop v2ray
+sudo systemctl restart v2ray
+----------------------------
+
+
+if your are ubuntu14.04 clinet,
+your need to install on same method,
+but if your want to run it ,your need to 
+go to the v2ray and run it.
+-----------------------
+cd /usr/bin/v2ray
+./v2ray -config /etc/v2ray/config.json
+-----------------------
+your can use commod follow
+-------------------------
+
+-------------------------
+
+
+
+

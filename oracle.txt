@@ -1,0 +1,21 @@
+System monitor SMON 
+process Monitor PMON
+database Writer DBW(n)
+
+根据策略和动态需求来提供工作
+集中资源以提高利用率
+自我调整和修补自适应软件
+统一管理和供应
+
+9.0.1.1.2
+版本号
+新特性版本号
+维护版本号
+普通的补丁设置号码
+特殊的平台补丁设置号码
+select * from V$Version
+RAC
+real application cluster
+联机分析处理
+数据挖掘技术
+
