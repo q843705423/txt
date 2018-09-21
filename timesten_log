@@ -1,0 +1,44 @@
+it can be writed in end of file .bash_profile
+-------------------------------------------------
+TT_HOME=/home/timesten/TimesTen/tt1122
+export TT_HOME
+. $TT_HOME/bin/ttenv.sh
+---------------------------------------------------
+
+you can use command ,enter command model
+---------------------
+ttisql
+-----------------------
+
+you can create use and share privileges
+-------------------------------------
+create USER $username identified by $password;
+--------------------------------------------------
+like
+create USER cqq identified by "16905710";
+----------------------
+
+you can exit ttisql model
+-----------------------------------
+quit
+-----------------------------
+
+if you is in command model , you can
+-------------------
+connect $DSN
+-------------------
+like 
+connect TT_1122
+------------------------
+
+and then ,you can use some DDL command to change datas.
+----------------------------------------
+create table students(id int,name varchar(255),sex int);
+insert into students values(1,'zhangsan',1);
+
+----------------------------------------
+
+how to send session
+---------------------------
+grant create session to cqq;
+---------------
