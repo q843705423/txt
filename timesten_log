@@ -42,3 +42,8 @@ how to send session
 ---------------------------
 grant create session to cqq;
 ---------------
+
+user how to create table
+---------------------------------
+grant create table to cqq;
+

@@ -19,3 +19,7 @@ real application cluster
 联机分析处理
 数据挖掘技术
 
+Oracle_Home = db_1
+Oracle_Home/bin
+.../database
+../network/admin
