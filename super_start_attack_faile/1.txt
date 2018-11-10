@@ -1,0 +1,17 @@
+jsonp07840558436588418('{"refer":"http://i.mooc.chaoxing.com","status":true}')
+https://mooc1-2.chaoxing.com/multimedia/log/5e51f38c927870743cc182e909e27195?clazzId=4786570&playingTime=76&duration=850&clipTime=0_850&objectId=055f79cf1d2d8b2c7de5c7190d48cb9e&otherInfo=nodeId_128210723&jobid=153562742113065&userid=43307910&isdrag=0&view=pc&enc=5e69889a076b57e5d397860001c2d0d6&rt=0.9&dtype=Video
+
+https://passport2.chaoxing.com/api/monitor?version=1541826668942&refer=http://i.mooc.chaoxing.com&jsoncallback=jsonp07437440128421802&t=1541827204948
+https://passport2.chaoxing.com/api/monitor?version=1541826668942&refer=http://i.mooc.chaoxing.com&jsoncallback=jsonp02905042363549115&t=1541827114945
+https://mooc1-2.chaoxing.com/multimedia/log/5e51f38c927870743cc182e909e27195?clazzId=4786570&playingTime=78&duration=850&clipTime=0_850&objectId=055f79cf1d2d8b2c7de5c7190d48cb9e&otherInfo=nodeId_128210723&jobid=153562742113065&userid=43307910&isdrag=0&view=pc&enc=01a932e6ab2d40b5dfa34d17e13ecf82&rt=0.9&dtype=Video
+https://mooc1-2.chaoxing.com/multimedia/log/45882ca80c58e96eccd9a07cb1ac9f84?clazzId=4786570&playingTime=56&duration=722&clipTime=0_722&objectId=41c7a9e7c5354e96256f3c5a5d5eb75b&otherInfo=nodeId_128210724&jobid=1535627458883288&userid=43307910&isdrag=0&view=pc&enc=52a0a11ad34365008b2e987af590c55e&rt=0.9&dtype=Video
+https://mooc1-2.chaoxing.com/multimedia/log/8373f9d747f99977eabc28c17ff3cf76?clazzId=4786570&playingTime=98&duration=1082&clipTime=0_1082&objectId=096c18349b1b01e9e5228918c2eeb632&otherInfo=nodeId_128210725&jobid=1535627477488668&userid=43307910&isdrag=0&view=pc&enc=37ffb1648471c07bbd77c4129dc76401&rt=0.9&dtype=Video
+
+
+https://mooc1-2.chaoxing.com/multimedia/log/335f5abbf119b3ef301380e2136894a4?clazzId=4786570&playingTime=0&duration=636&clipTime=0_636&objectId=a529f0805cfcd54f0a7b8455f998d51e&otherInfo=nodeId_128210726&jobid=1535627492601858&userid=43307910&isdrag=0&view=pc&enc=6affb03eaec1105684b251d19e85160a&rt=0.9&dtype=Video
+https://mooc1-2.chaoxing.com/multimedia/log/335f5abbf119b3ef301380e2136894a4?clazzId=4786570&playingTime=8&duration=636&clipTime=0_636&objectId=a529f0805cfcd54f0a7b8455f998d51e&otherInfo=nodeId_128210726&jobid=1535627492601858&userid=43307910&isdrag=0&view=pc&enc=9193e0f700855b9c2fba4db5c7ad7f58&rt=0.9&dtype=Video
+
+37ffb164
+8471c07b
+bd77c412
+9dc76401
