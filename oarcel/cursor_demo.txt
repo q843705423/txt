@@ -1,0 +1,15 @@
+╡н©╪ндуб https://www.cnblogs.com/xiaoliu66007/p/7495753.html
+
+SET SERVEROUTPUT ON
+DECLARE
+	V_name VARCHAR2(255);
+	V_id   NUMBER;
+CURSOR student_cursor IS SELECT id,name FROM student order by id desc;
+BEGIN
+	OPEN student_cursor;
+	for i in 1..3 loop
+		fetch student_cursor into V_id,V_name;
+		DBMS_OUTPUT.PUT_LINE(V_id||','||V_name);
+	END LOOP;
+	CLOSE student_cursor;
+END;
