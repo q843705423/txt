@@ -1,0 +1,89 @@
+要学存储过程，需要学习plsql的基础语法。
+--------------------------------------------------
+DECLARE
+   message  varchar2(20):= 'Hello, World!';
+BEGIN
+   dbms_output.put_line(message);
+END;
+/
+--------------------------------------------------
+以上代码，先对message变量进行声明，然后声明成varchar2(20)类型，然后用:= 进行赋值。
+赋值完了以后，在begin，end块中，调用内置的dbms_output.put_line函数进行输出。
+其中/来表示语句执行的标志。
+需要注意的是，每句话写好，都要用；结尾。
+特别注意：第一次使用，dbms_output.put_line是无效的，需要先输入set serveroutput on;
+
+---------------------------------------------------------------
+DECLARE
+ 	v_name varchar2(255) :='wangwu';
+BEGIN
+	insert into student values(10,v_name,1);
+END;
+----------------------------------------------------------------------
+以上代码，是往数据库里的一张student表插入一条数据，值为10，v_name,和1
+其中v_name是 varchar2（255）类型的，被赋值为wangwu。
+
+
+----------------------------------------------------------------------------
+create or replace procedure 
+my_first_procedure(arg1 IN varchar2)	
+is message varchar2(255):='hello world';
+   students ALIST;
+begin
+	message := 'hello' || arg1;
+	dbms_output.put_line(message);
+
+end my_first_procedure;
+------------------------------------------------------------------------------
+然后，就是存储过程的声明了,以上声明了一个过程，这个过程的名字叫my_first_procedure,然后有一个arg1参数，是varchar2类型
+然后,在IS之后，声明了一个变量，刚开始是赋值为 hello world，后来重新赋值成 'hello'与arg1的相加，然后调用内置函数输出
+|| 是字符串连接的运算符。
+
+-------------------------------------------------------
+create or replace trigger my_first_trigger
+	after insert on student
+declare 
+	
+begin
+	dbms_output.put_line('one row is inserted');
+end my_first_trigger;
+-------------------------------------------------------------------
+以上是每次插入一条数据，就会输出 one row is inserted 的触发器，
+trigger(触发器)与procedure(过程)不同的地方，是一个是需要调用执行，另一个是触发执行的
+触发器与
+
+
+---------------------------------------------------------
+create or replace trigger my_second_trigger
+	after insert or delete on student
+declare
+	v_number number ;
+begin
+	select count(*) into v_number from student ;
+	dbms_output.put_line( 'now,row number is ' || v_number);
+end my_second_trigger;
+--------------------------------------------------------
+
+
+-------------------------------------------------------------------
+create or replace trigger my_three_trigger
+	after insert or delete or update on student
+declare 
+	b_num number;
+	g_num number;
+begin
+	select count(*) into b_num from student  where sex=1; 
+	select count(*) into g_num from student where sex!=1;
+	update student_global set boy_number=b_num,girl_number=g_num;
+end my_three_trigger;
+-------------------------------------------------------------------------------------------
+这是一个触发器，每当增加，修改，删除学生信息的时候，会重新统计全部的男生和女生的人数，并且记录到 student_global 表中
+
+
+create or replace procedure show_person()
+declare
+	CURSOR cur is select * from student;
+begin
+	dbms_output.put_line('hello world');
+end show_person;
+
