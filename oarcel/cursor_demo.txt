@@ -13,3 +13,110 @@ BEGIN
 	END LOOP;
 	CLOSE student_cursor;
 END;
+----------------------------------------------------------------
+create or replace procedure
+student_cur_procedure(arg1 IN varchar2)
+is 
+	V_name VARCHAR2(255);
+	V_id   NUMBER;
+	CURSOR student_cursor IS SELECT id,name FROM student order by id desc;
+BEGIN
+	OPEN student_cursor;
+	for i in 1..3 loop
+		fetch student_cursor into V_id,V_name;
+		DBMS_OUTPUT.PUT_LINE(V_id||','||V_name);
+	END LOOP;
+	CLOSE student_cursor;
+END student_cur_procedure;
+------------------------------------------------------------------------
+create or replace procedure
+bus_calculate_score(arg1 IN varchar2)
+is
+	V_busid varchar2(255);
+	V_score NUMBER;
+	V_lasttime DATE;
+	V_num NUMBER;
+	CURSOR v_bus_score_cur IS select busid,score,lasttime from PI_BUSSCORE;
+	CURSOR v_log IS select * from PI_BUSACTIONLOG where  actiontime>  To_date(To_char(Trunc(SYSDATE), 'yyyy/mm/dd hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss');
+BEGIN
+
+	for lg in v_log
+	loop
+		DBMS_OUTPUT.PUT_LINE(lg.busid||'-----'||lg.actiontime);
+
+	end loop;
+END  bus_calculate_score;
+------------------------------------------------------------------------------
+如果使用游标，游标会先循环所有的日志(729W条)，然后循环所有的车(1100条)
+所以严重超时。
+换种思路，想要先创建临时表。这样把日志729W条，先压缩成每天不超过车辆的5n(即为5500)条（若车辆为n辆）
+
+//DBMS_OUTPUT.PUT_LINE('v_busid='||bsc.busid||'bsc.lasttime'|| bsc.lasttime );
+//for bsc in v_bus_score_cur loop
+//end loop;
+//fetch v_bus_score_cur into v_busid,v_score,v_lasttime;
+------------------------------------------------------------------------------------------------------
+create or replace procedure asdas (arg1 IN varchar2)
+as
+	v_busid varchar2(255);
+	
+begin
+	for v_log in (select * from PI_BUSACTIONLOG ) loop
+		DBMS_OUTPUT.PUT_LINE('v_busid='||v_busid||'v_lasttime'|| v_lasttime );
+	end loop ;
+end  asdas;
+
+---------------------------------------------------------------------------------
+存储过程没有输入，会报错
+TO_DATE( v_lasttime , 'YYYY-MM-DD hh24:mi:ss')
+-------------------------------------------------------------------------------------
+create or replace procedure template_table (arg1 in varchar2)
+is
+	 str_sql varchar2(100);
+	num NUMBER;
+begin
+	str_sql := 'create global temporary table temp_table (
+       
+		busid varchar2(10),
+       
+
+	) on commit preserve rows';
+ 
+	execute immediate str_sql;
+
+	
+	str_sql := 'select count(*) into num from temp_table;
+	DBMS_OUTPUT.PUT_LINE( num );'  ;
+	
+	str_sql := 'insert into temp_table select busid from PI_BUSACTIONLOG ;' ;
+	str_sql := 'drop table temp_table';
+  	execute immediate str_sql;
+	
+end template_table ;
+--------------------------------------------------------------------------------------------
+create or replace procedure asd(arg1 in varchar2)
+is 
+	num NUMBER;
+begin
+	select * into #T from PI_BUSACTIONLOG;
+end asd;
+--------------
+create or replace procedure pro as
+  str_sql varchar2(100);
+begin
+  -- 创建临时表
+  str_sql := 'create global temporary table temp_table (
+       col1 varchar2(100),
+       col2 number
+    ) on commit preserve rows';
+  execute immediate str_sql;
+ 
+  -- 使用临时表
+  str_sql := 'insert into temp_table(col1, col2) values("a", 1)';
+  execute immediate str_sql;
+  -- 删除临时表
+  str_sql := 'drop table temp_table';
+  execute immediate str_sql;
+end;
+-------------------------------------------------------
+ 字符串缓冲区太小

@@ -1,0 +1,52 @@
+先获取所有车辆之前的分数。
+然后获取所有车子当天的日志
+然后根据日志的情况，给相应的车辆加分
+根据日志状态的不同来给分
+1表示进场安检，+1分
+2表示收银 ，+5分
+4表示加油，+3分
+6表示洗车，+2分
+8 表示出场安检，分数归0
+
+然后对车子的所有可能情况进行分类讨论
+
+如果车子今天出过了，那么就把数据归0
+
+
+检测出，车子存在重复加分的问题，没有进行判断·
+本着先写出来，再进行优化的思路
+/////////////////////////////////////
+1.获取分数对象列表
+2.然后对每一个分数对象，以双重条件进行查询，车子的id，及从上次车子的更新时间。
+3.然后进行分数的计算，然后重新计算得分。
+4.然后重新计算更新分数以及分数的更新时间。
+
+
+--------------------------------------------------------------------------
+如果车子今天没出过场，那么如果车子没有动过。
+select * from PI_BUSSCORE into p_score;  //获取数据库里与分数有关的对象
+循环遍历每个分数对象，然后找到该车子的所有从上次更新到这次的所有日志
+for p_score in 
+	select * 
+	from PI_BUSACTIONLOG 
+	into bus_action_log_cur 
+	where actiontime>p_score.LASTTIME and BUSID=p_score.BUSID 
+	order by ACTIONTIME asc
+
+insert into PI_BUSACTIONLOG(RECID,ACTIONTIME,ACTIONTYPE,BUSID,DEPTID) values(4478668,'2016/9/30 6:15:40',1,'9-7519','090101')
+insert into PI_BUSACTIONLOG (RECID, ACTIONTIME, ACTIONTYPE, REMARK, BUSID, DEPTID, PLACE)
+values (6478668, to_date('12-11-2018 09:25:40', 'dd-mm-yyyy hh24:mi:ss'), 1, null, '9-7519', '090101', null);
+
+如果车子今天没出过场，那么如果车子没有动过。
+select * from PI_BUSSCORE into p_score;  //获取数据库里与分数有关的对象
+循环遍历每个分数对象，然后找到该车子的所有从上次更新到这次的所有日志
+for p_score in 
+	select * 
+	from PI_BUSACTIONLOG 
+	into bus_action_log_cur 
+	where actiontime>p_score.LASTTIME and BUSID=p_score.BUSID 
+	order by ACTIONTIME asc
+
+insert into PI_BUSACTIONLOG(RECID,ACTIONTIME,ACTIONTYPE,BUSID,DEPTID) values(4478668,'2016/9/30 6:15:40',1,'9-7519','090101')
+insert into PI_BUSACTIONLOG (RECID, ACTIONTIME, ACTIONTYPE, REMARK, BUSID, DEPTID, PLACE)
+values (6478668, to_date('12-11-2018 09:25:40', 'dd-mm-yyyy hh24:mi:ss'), 1, null, '9-7519', '090101', null);
