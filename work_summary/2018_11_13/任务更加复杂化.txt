@@ -66,12 +66,14 @@ BEGIN
 					score_number :=10 ;
 				end if;
 				if score_number!=score_number_compare  then
-					dbms_output.put_line('hello world');
+					dbms_output.put_line(bus_action_log(j).actiontime );
 				end if;
-				update PI_BUSSCORE set score=0 where busid=bus_gps_info(i).busid;
-			end if;	
+				UPDATE PI_BUSSCORE set score=score_number,lasttime=bus_action_log(j).actiontime 
+				where busid=bus_gps_info(i).busid;
+				commit;
+			end if;
 		end loop;
-		--循环每个日志信息
+		--然后获取到车辆的
 	end loop;
 	
 		
