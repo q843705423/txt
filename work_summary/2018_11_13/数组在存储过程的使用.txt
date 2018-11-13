@@ -1,0 +1,115 @@
+create or replace procedure array_demo(arg1 in varchar2)
+is
+	type v_arr is varray(10) of varchar2(30);
+	my_arr v_arr;
+	my_arr:= v_arr('1','2','3');
+begin
+	for i in 1..my_arr.count
+	loop
+		dbms_output_line(my.arr(i));
+	end loop;
+
+end array_demo;
+---------------------------------------------------------
+以上定长数组不能使用，暂时找不到原因
+-----------------------------------------------------------
+declare
+type v_table is table of varchar2(30) index by binary_integer;
+--类型可以是前面的类型定义，index by binary_integer子句代表以符号整数为索引，   
+--这样访问表类型变量中的数据方法就是“表变量名(索引符号整数)”。   
+my_table v_table;
+begin
+      for i in 1..20
+     loop
+          my_table(i):=i;
+          dbms_output.put_line(my_table(i));
+      end loop;
+end;
+------------------------------------------------------------------
+动态数组是可以使用的
+------------------------------------------------------------------
+declare
+	type type_student is record(
+		s_id student.id%type,
+		s_name student.name%type
+	);
+	students type_student;
+	
+begin
+	select id,name into students.s_id,students.s_name from student;
+end;
+------------------------------------------------------------------
+可以把 type_student 理解成一个自定义类型，
+上面的select into 语句，
+报错 实际返回的行数超出请求的行数
+可见加上条件变成只有一条应该是可以的。
+
+------------------------------------------------------------------
+declare
+	type type_student is record(
+		s_id student.id%type,
+		s_name student.name%type
+	);
+	students type_student;
+	
+begin
+	select id,name into students.s_id,students.s_name from student where id=1;
+end;
+------------------------------------------------------------------
+如果改成使用存储过程
+------------------------------------------------------------------
+create or replace procedure test(arg1 in varchar2)
+is
+	type type_student is record(
+		s_id student.id%type,
+		s_name student.name%type
+	);
+	students type_student;
+begin
+
+	select id,name into students.s_id,students.s_name from student where id=1;
+
+end test; 
+------------------------------------------------------------------
+修改成这样并没有问题。
+这是划时代的发现，至此表中的一个对象，可以先被固化到一个 record中。
+但是，这样还是不够的，我们需要改成列表的类型
+------------------------------------------------------------------
+create or replace procedure test(arg1 in varchar2)
+is
+	type student_type is record(
+		s_id student.id%type,
+		s_name student.name%type
+	);
+	type student_table is table of student_type index by binary_integer;
+	my_table student_table;
+	s_student student_type;
+begin
+	select * into my_table from student;
+	dbms_output.put_line('hello world');
+	
+end test;	
+------------------------------------------------------------------
+以上类型指定的不正确。需要换种方式
+------------------------------------------------------------------
+create or replace procedure test(arg1 in varchar2)
+is
+	TYPE student_table IS TABLE OF student%ROWTYPE INDEX BY BINARY_INTEGER;
+	students student_table;
+BEGIN
+	SELECT * BULK COLLECT INTO students FROM student;
+	FOR i IN 1 .. students.COUNT
+	LOOP
+		DBMS_OUTPUT.PUT_LINE('id:'||students(i).id||' name:'||students(i).name);
+	END LOOP;
+END test;
+
+-----------------------------------------------------------
+这里用了新的关键词,BULK CONLLECT,
+
+
+
+
+				
+
+@https://www.cnblogs.com/ios9/p/8267642.html

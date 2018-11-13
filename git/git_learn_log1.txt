@@ -57,7 +57,7 @@ git remote and origin git@*.git
 git push -u  origin master
 git push origin master
 
-#just now is a methon ,we create a local repository first,and connect it to  cloud repository . now we contrary it 
+#just now is a method ,we create a local repository first,and connect it to  cloud repository . now we contrary it 
 git clone git@*.git
 
 #look all branch
