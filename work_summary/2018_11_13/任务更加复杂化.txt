@@ -77,14 +77,12 @@ BEGIN
 		end loop;
 		
 	end loop;
-	open out_var for SELECT PI_BUSGPSINFO.busid,PI_BUSGPSINFO.lastx,PI_BUSGPSINFO.lasty,PI_BUSSCORE.score
+	OPEN out_var for SELECT PI_BUSGPSINFO.busid,PI_BUSGPSINFO.lastx,PI_BUSGPSINFO.lasty,PI_BUSSCORE.score
 	from PI_BUSGPSINFO 
 	left join PI_BUSSCORE
 	on PI_BUSGPSINFO.busid = PI_BUSSCORE.busid
-	WHERE PI_BUSGPSINFO.Areaid in (select areaid from PI_GPSAREA where deptid = '090101');
+	WHERE PI_BUSGPSINFO.Areaid in (select areaid from PI_GPSAREA where deptid = deptid_param   );
 	
 		
 END test;	
-
-
 ------------------------------------------------------------------------------------------------
