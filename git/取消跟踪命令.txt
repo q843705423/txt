@@ -1,0 +1,5 @@
+让git不再跟踪文件的变化
+git update-index --skip-worktree $(文件绝对路径)  
+
+
+
