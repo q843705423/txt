@@ -1,0 +1,7 @@
+select * from PI_BUSGPSINFO 
+left join PI_GPSAREA
+on PI_BUSGPSINFO.Areaid = PI_GPSAREA.Areaid
+left join PI_BUSSCORE
+on PI_BUSSCORE.Busid = PI_BUSGPSINFO.busid
+where PI_GPSAREA.Deptid is not null
+;

@@ -1,0 +1,88 @@
+--也就是说，从前端获取数据，包括显示，直接就获取到与车辆信息有关的所有数据。
+--其中包括车辆的bus_id 车辆的分数，以及车辆的GPS定位。
+----------------------------------------------------------------------------------------------
+create or replace procedure test( deptid_param IN varchar2,out_var OUT sys_refcursor)
+is 
+	TYPE bus_action_log_type IS TABLE OF PI_BUSACTIONLOG%ROWTYPE INDEX BY BINARY_INTEGER;--定义PI_BUSACTIONLOG表的一个List数组
+	bus_action_log bus_action_log_type ;--声明 bus_action_log_type 的变量
+	bus_action_log_by_busid bus_action_log_type ;
+	TYPE bus_gps_info_type IS TABLE OF PI_BUSGPSINFO%ROWTYPE INDEX BY BINARY_INTEGER;--定义PI_BUSGPSINFO表的一个List数组
+	bus_gps_info bus_gps_info_type ;--声明 bus_gps_info_type 的变量
+	TYPE bus_score_type IS TABLE OF PI_BUSSCORE%ROWTYPE INDEX BY BINARY_INTEGER;--定义 PI_BUSSCORE表的一个List数组
+	bus_score bus_score_type ;
+	score_number NUMBER;--临时变量，记住当前该车的分数.
+	score_number_compare NUMBER; --临时变量，用来比较分数的变化情况
+	lastime_date DATE; --临时变量，记住当前车的最新更新时间.
+	num NUMBER;
+BEGIN
+	--获取从今天0:00开始的车辆动作信息,放入 bus_action_log之中
+	SELECT * BULK COLLECT INTO bus_action_log 
+	FROM PI_BUSACTIONLOG
+	where actiontime>To_date(To_char(Trunc(SYSDATE), 'yyyy/mm/dd hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss');
+	dbms_output.put_line(bus_action_log.count());
+	--获取所有车辆的GPS定位信息，然后放入 bus_gps_info之中
+	--SELECT * BULK COLLECT INTO bus_gps_info
+	--FROM PI_BUSGPSINFO;
+	SELECT * BULK COLLECT INTO bus_gps_info FROM PI_BUSGPSINFO 
+	WHERE areaid IN (SELECT areaid FROM PI_GPSAREA WHERE deptid= deptid_param  );
+	dbms_output.put_line(bus_gps_info.count());
+	--获取所有车辆的初始分数，然后放入 bus_score  之中。
+	SELECT * BULK COLLECT  INTO bus_score  
+	FROM PI_BUSSCORE;
+	dbms_output.put_line(bus_score.count());
+
+	for i in 1..bus_gps_info.count()  loop
+		dbms_output.put_line(bus_gps_info(i).BUSID );
+	end loop;
+	-- 循环每辆gps的信息
+	for i in 1..bus_gps_info.count() loop
+		--根据该车的id获取到它的初始分数
+		BEGIN
+			SELECT SCORE , LASTTIME INTO score_number , lastime_date FROM PI_BUSSCORE WHERE BUSID=bus_gps_info(i).busid;
+			--dbms_output.put_line(score_number);
+			--可能会发生找不到车辆分数的异常,暂时先不做继续处理TODO
+			EXCEPTION WHEN NO_DATA_FOUND THEN
+				--dbms_output.put_line('a no_data_found exception is broken'); 
+				score_number := -1 ; 			
+		END;
+		--然后遍历日志
+		for j in 1..bus_action_log.count() loop
+			--dbms_output.put_line(bus_action_log.count());
+			--如果是这辆车子，且日志的时间新于车子的最近更新时间
+			if bus_action_log(j).busid=bus_gps_info(i).busid and bus_action_log(j).actiontime>lastime_date   then
+				--dbms_output.put_line('it is the car, and the time is newly than car update time.'); 
+				score_number_compare  := score_number ;
+				--判断该日志的类型,并对分数作出相应的处理
+				if bus_action_log(j).actiontype = 1 then  --进场安检
+					score_number := score_number + 1;
+				elsif bus_action_log(j).actiontype = 2 then --收银
+					score_number := score_number + 5;
+				elsif bus_action_log(j).actiontype = 4 then  --加油结束
+					score_number := score_number + 3;
+				elsif bus_action_log(j).actiontype = 6 then --洗车结束
+					score_number := score_number + 2;
+				elsif bus_action_log(j).actiontype = 8 then --出场安检，分数清0.
+					score_number := 0;
+				end if;
+				if score_number > 10 then
+					score_number :=10 ;
+				end if;
+				if score_number!=score_number_compare  then
+					dbms_output.put_line(bus_action_log(j).actiontime );
+				end if;
+				UPDATE PI_BUSSCORE set score=score_number,lasttime=bus_action_log(j).actiontime 
+				where busid=bus_gps_info(i).busid;
+				commit;
+			end if;
+		end loop;
+		
+	end loop;
+	OPEN out_var for SELECT PI_BUSGPSINFO.busid,PI_BUSGPSINFO.lastx,PI_BUSGPSINFO.lasty,PI_BUSSCORE.score
+	from PI_BUSGPSINFO 
+	left join PI_BUSSCORE
+	on PI_BUSGPSINFO.busid = PI_BUSSCORE.busid
+	WHERE PI_BUSGPSINFO.Areaid in (select areaid from PI_GPSAREA where deptid = deptid_param   );
+	
+		
+END test;	
+------------------------------------------------------------------------------------------------
