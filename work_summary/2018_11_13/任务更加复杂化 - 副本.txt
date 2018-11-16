@@ -1,7 +1,7 @@
 --也就是说，从前端获取数据，包括显示，直接就获取到与车辆信息有关的所有数据。
 --其中包括车辆的bus_id 车辆的分数，以及车辆的GPS定位。
 ----------------------------------------------------------------------------------------------
-create or replace procedure test( deptid_param IN varchar2,out_var OUT sys_refcursor)
+create or replace procedure test( deptid_param IN varchar2)--,out_var OUT sys_refcursor
 is 
 	TYPE bus_action_log_type IS TABLE OF PI_BUSACTIONLOG%ROWTYPE INDEX BY BINARY_INTEGER;--定义PI_BUSACTIONLOG表的一个List数组
 	bus_action_log bus_action_log_type ;--声明 bus_action_log_type 的变量
@@ -77,11 +77,6 @@ BEGIN
 		end loop;
 		
 	end loop;
-	OPEN out_var for SELECT PI_BUSGPSINFO.busid,PI_BUSGPSINFO.lastx,PI_BUSGPSINFO.lasty,PI_BUSSCORE.score
-	from PI_BUSGPSINFO 
-	left join PI_BUSSCORE
-	on PI_BUSGPSINFO.busid = PI_BUSSCORE.busid
-	WHERE PI_BUSGPSINFO.Areaid in (select areaid from PI_GPSAREA where deptid = deptid_param   );
 	
 		
 END test;	

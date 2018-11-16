@@ -22,7 +22,7 @@ BEGIN
 	FROM PI_BUSACTIONLOG
 	where actiontime>To_date(To_char(Trunc(SYSDATE), 'yyyy/mm/dd hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss');
 	dbms_output.put_line(bus_action_log.count());
-
+	--获取所有停车场的信息
 	SELECT * BULK COLLECT INTO bus_gps_info FROM PI_BUSGPSINFO 
 	WHERE areaid IN (SELECT areaid FROM PI_GPSAREA WHERE deptid= '090101');
 	dbms_output.put_line(bus_gps_info.count());
