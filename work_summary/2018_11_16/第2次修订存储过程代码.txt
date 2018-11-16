@@ -1,7 +1,7 @@
 --也就是说，从前端获取数据，包括显示，直接就获取到与车辆信息有关的所有数据。
 --其中包括车辆的bus_id 车辆的分数，以及车辆的GPS定位。
 ----------------------------------------------------------------------------------------------
-create or replace procedure test
+create or replace procedure test(out_var OUT sys_refcursor)
 is 
 	TYPE bus_action_log_type IS TABLE OF PI_BUSACTIONLOG%ROWTYPE INDEX BY BINARY_INTEGER;--定义PI_BUSACTIONLOG表的一个List数组
 	bus_action_log bus_action_log_type ;--声明 bus_action_log_type 的变量
@@ -10,29 +10,27 @@ is
 	bus_gps_info bus_gps_info_type ;--声明 bus_gps_info_type 的变量
 	TYPE bus_score_type IS TABLE OF PI_BUSSCORE%ROWTYPE INDEX BY BINARY_INTEGER;--定义 PI_BUSSCORE表的一个List数组
 	bus_score bus_score_type ;
-	TYPE g_deptinfo_type is TABLE OF G_DEPTINFO%ROWTYPE INDEX BY BINARY_INTEGER;--定义 G_DEPTINFO表的一个List数组
-	g_deptinfo g_deptinfo_type ;
 	score_number NUMBER;--临时变量，记住当前该车的分数.
 	score_number_compare NUMBER; --临时变量，用来比较分数的变化情况
 	lastime_date DATE; --临时变量，记住当前车的最新更新时间.
 	num NUMBER;
+	exise_score_flag NUMBER;
 BEGIN
 	--获取从今天0:00开始的车辆动作信息,放入 bus_action_log之中
 	SELECT * BULK COLLECT INTO bus_action_log 
 	FROM PI_BUSACTIONLOG
 	where actiontime>To_date(To_char(Trunc(SYSDATE), 'yyyy/mm/dd hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss');
 	dbms_output.put_line(bus_action_log.count());
-	--获取所有停车场的信息
-	SELECT * BULK COLLECT INTO bus_gps_info FROM PI_BUSGPSINFO 
-	WHERE areaid IN (SELECT areaid FROM PI_GPSAREA WHERE deptid= '090101');
+	--获取 每辆GPS的信息
+	SELECT * BULK COLLECT INTO bus_gps_info FROM PI_BUSGPSINFO;
 	dbms_output.put_line(bus_gps_info.count());
 	--获取所有车辆的初始分数，然后放入 bus_score  之中。
 	SELECT * BULK COLLECT  INTO bus_score  
 	FROM PI_BUSSCORE;
-	
-	
+
 	-- 循环每辆gps的信息
 	for i in 1..bus_gps_info.count() loop
+		exise_score_flag := 1 ; --刚开始假设分数存在
 		--根据该车的id获取到它的初始分数
 		BEGIN
 			SELECT SCORE , LASTTIME INTO score_number , lastime_date FROM PI_BUSSCORE WHERE BUSID=bus_gps_info(i).busid;
@@ -40,7 +38,8 @@ BEGIN
 			--可能会发生找不到车辆分数的异常,暂时先不做继续处理TODO
 			EXCEPTION WHEN NO_DATA_FOUND THEN
 				--dbms_output.put_line('a no_data_found exception is broken'); 
-				score_number := -1 ; 			
+				score_number := 0 ; 	
+				exise_score_flag := 0; --现在知道并没有该车的分数记录		
 		END;
 		--然后遍历日志
 		for j in 1..bus_action_log.count() loop
@@ -67,15 +66,29 @@ BEGIN
 				if score_number!=score_number_compare  then
 					dbms_output.put_line(bus_action_log(j).actiontime );
 				end if;
-				UPDATE PI_BUSSCORE set score=score_number,lasttime=bus_action_log(j).actiontime 
-				where busid=bus_gps_info(i).busid;
-				commit;
+				if exise_score_flag = 0 then --不存在这个bus_score记录
+					INSERT INTO PI_BUSSCORE(busid,deptid,lasttime,score) --那么就先插入
+					values( bus_gps_info(i).busid , bus_action_log(j).deptid ,  bus_action_log(j).actiontime , score_number  );				
+				elsif exise_score_flag = 1 then
+					UPDATE PI_BUSSCORE set score=score_number,lasttime=bus_action_log(j).actiontime 
+					where busid=bus_gps_info(i).busid;
+					commit;
+				end if;
+				exise_score_flag := 1; --将不存在该记录重新变成1
 			end if;
 		end loop;
-		
 	end loop;
-	
-	
-		
+	OPEN out_var for SELECT 
+			PI_BUSGPSINFO.Busid,
+			PI_BUSGPSINFO.LASTX,
+			PI_BUSGPSINFO.LASTY,
+			PI_GPSAREA.DEPTID,
+			PI_BUSSCORE.score
+		from PI_BUSGPSINFO 
+		left join PI_GPSAREA
+			on PI_BUSGPSINFO.Areaid = PI_GPSAREA.Areaid
+		left join PI_BUSSCORE
+			on PI_BUSSCORE.Busid = PI_BUSGPSINFO.busid
+		where PI_GPSAREA.Deptid is not null;
 END test;	
 ------------------------------------------------------------------------------------------------

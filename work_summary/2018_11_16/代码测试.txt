@@ -1,0 +1,64 @@
+存储过程与java的调用已经完成，原本许多连接的代码全部都替换成存储过程
+相当于java与Oracle在正常过程中实现每10秒只请求了1次，省去了大量连接占用。
+但是对于它是否能够改善服务器两天一崩的问题，还是待定的。
+
+现在需要对已经编写好的代码，进行几轮测试，保证代码的准确性。
+第一轮是进行代码正确性的测试。
+
+测试内容如下，
+1.增加一辆车子的出场日志，查看车子颜色是否发生变化。
+insert into PI_BUSACTIONLOG (RECID,ACTIONTIME, ACTIONTYPE, REMARK, BUSID, DEPTID, PLACE)
+values (22000000,to_date('12-11-2018 20:12:40', 'dd-mm-yyyy hh24:mi:ss'), 8, null, '9-4785', '090101', null);
+
+以上代码直接在数据库执行，将给busid 为 9-4785 的车增加一条回场日志，不过是昨天的时间。
+预期，该车分数不变。(因为时间上不是今天的日志)
+实际， 该车分数的确不变. 正确！
+
+再插入一条今天的日志，预计颜色遍红。
+insert into PI_BUSACTIONLOG (RECID,ACTIONTIME, ACTIONTYPE, REMARK, BUSID, DEPTID, PLACE)
+values (22000001,to_date('16-11-2018 13:20:40', 'dd-mm-yyyy hh24:mi:ss'), 8, null, '9-4785', '090101', null);
+颜色的确变成红色
+再进行一次相同的测试，增加12日的车子的动作日志，但是是加分的
+insert into PI_BUSACTIONLOG (RECID,ACTIONTIME, ACTIONTYPE, REMARK, BUSID, DEPTID, PLACE)
+values (22000003,to_date('12-11-2018 20:12:40', 'dd-mm-yyyy hh24:mi:ss'), 1, null, '9-4785', '090101', null);
+没有变化，正确。
+
+再把时间改成今天的。
+insert into PI_BUSACTIONLOG (RECID,ACTIONTIME, ACTIONTYPE, REMARK, BUSID, DEPTID, PLACE)
+values (22000004,to_date('16-11-2018 13:42:40', 'dd-mm-yyyy hh24:mi:ss'), 1, null, '9-4785', '090101', null);
+分数加1，车子颜色变橙色。正确
+
+随着时间的增加，若没有日志变化，车子颜色不会一直发生变化，正确！
+
+若插入一条也是今天，只是是13点之前的数据。预计不会发生变化。
+insert into PI_BUSACTIONLOG (RECID,ACTIONTIME, ACTIONTYPE, REMARK, BUSID, DEPTID, PLACE)
+values (22000005,to_date('16-11-2018 12:42:40', 'dd-mm-yyyy hh24:mi:ss'), 1, null, '9-4785', '090101', null);
+颜色没有发生变化，正确！
+
+车子的bus_score数据，原来是java生成的，但是如果本来不存在车子的bus_score信息，但是存在车子的bus_gps信息，那么是否会发生报错？
+测试，删除一条，bus_score。观察后台报错情况
+delete from PI_BUSSCORE where busid= '9-4785';
+开始报错，报错内容，ORA-00001: 违反唯一约束条件 (SYSTEM.BUSID)
+与预期不符，开始进行排查。
+bus_score已经删除，为什么还会生成这样的报错信息？
+将记录重新加回来
+insert into PI_BUSSCORE (BUSID, DEPTID, LASTTIME, SCORE) values ('9-4785', '090101', to_date('02-08-2018 16:27:50', 'dd-mm-yyyy hh24:mi:ss'), 0);
+程序会恢复到正常状态，并继续正常运行。
+暂时无法知道原因。
+排查测试，修改 存储过程部分的逻辑代码。
+
+bug解决，是存储过程的问题，的确是多次提交了。
+
+现在当删除bus_score时候，bus_score会根据bus_action重新生成回来。
+同理，就算是不存再bus_score，只要有bus_gps和bus_action，就都可以进行生成。
+
+问题基本已经解决。
+
+
+
+
+
+
+
+
+
