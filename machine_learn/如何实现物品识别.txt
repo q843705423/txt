@@ -1,0 +1,69 @@
+#首先下载安装python(若你的电脑为64位的，请下载python的64位的版本，且保证版本不要太新)
+@到官网 https://www.python.org/downloads/ 可以下载最新版本的python
+
+#然后下载pip管道工具，用它可以方便安装python的各种模块，进入cmd输入以下命令。
+python -m pip install --upgrade pip --force-reinstall
+
+
+#利用pip进行各个模块的安装
+@使用cmd命令行进入你所安装python目录的Script文件夹，pip就在这个文件夹下，然后执行以下代码
+pip install pillow
+pip install lxml
+pip install jupyter
+pip install matplotlib
+@以上是几个需要安装的python模块，在进行物品识别中都会用到
+@pillow:可以进行简单的图像操作
+@lxml: 高速地文件格式化解析
+@jupyter:交互式笔记本，可以进行数据分析等
+@matplotlib：python的2D绘图库，用于机器学习的可视化显示
+
+
+#前往 https://github.com/tensorflow/models ，进行下载(大约400MB)
+@有两种方式，如果你有安装git且配置了环境变量，你可以直接用git命令下载。
+@否则，你直接进入这个网址，点击绿色的download按钮进行下载.
+
+#接下来，我们来做一个简单的测试，请到这个网站https://github.com/protocolbuffers/protobuf/releases
+@下载一个 protoc-3.6.1-win32.zip(经过测试，3.6最后会报错，最后改成3.4.0）
+@上一个@不做数，因为有Bug，请下载3.4版本（参考博客https://blog.csdn.net/ltszhh/article/details/81588081）
+@请你到你刚刚下载的那个400多M的models-master目录(并保证该目录下有research文件夹)，输入以下代码
+"D:\code\python\protoc-3.4.0-win32\bin\protoc" research/object_detection/protos/*.protos --python_out=.
+@该命令分左边和右边，右边保持不变，左边改成你的protoc的exe绝对路径，但不需要加.exe后缀。
+
+#接下来将D:\environment\python\Scripts(就是你安装python路径下的Script配置到你的系统变量中)
+@此电脑（右键）->属性->高级系统设置（左键）->环境变量配置 （暂时神略）
+
+#然后重启cmd，进入models-master目录，输入jupyter notebook，启动一个网站
+----------------------------------------------------------------------------------
+安装tensorflow遇到问题
+Could not find a version that satisfies the requirement tensorflow (from versions: ) No matching distribution found for tensorflow
+报错原因:没有安装64位的python
+解决办法:卸载原来的python,重新安装64位的python
+如何查看安装python是多少位的。
+解决办法:cmd命令下输入python，看第1行。
+如何重新安装python
+先使用安装python的程序，再次点击可以选择卸载
+----------------------------------------------------------------------------------
+
+#进行喂食数据的准备，为了加快准备速度，推荐下载 https://github.com/tzutalin/labelImg 
+使用该工具，必须下载 pyQt4，并且保证你刚刚的确用pip安装过lxml
+
+#下载pyQt4有许多种方式.
+介绍其中2种
+一.参考博客 https://blog.csdn.net/u012654847/article/details/75228929
+二.
+1.先到 https://riverbankcomputing.com/software/sip/download下载sip
+2.解压，然后python configure.py
+3.再输入make，如果make命令不存在
+4.那就去下载mingw，请参考网址 https://jingyan.baidu.com/article/0320e2c11564ca1b87507b8f.html
+5.
+-----------------------------------------------------------------------------------------------
+以上出了一些问题，我们先不管它，先用xml文件去生成csv文件，再由csv文件生成record集.
+#先使用xml_to_csv.py文件
+#再使用generate_tfrecord.py文件
+--------------------------------------------------------------------------------
+到reseacher目录下 export PYTHONPATH = $ PYTHONPATH：`pwd`：`pwd` / slim
+python setup.py install
+pip install nets
+
+参考文件https://blog.csdn.net/huixingshao/article/details/80466158
+
