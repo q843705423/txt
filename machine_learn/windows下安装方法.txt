@@ -1,0 +1,74 @@
+1.安装python3.6（记得勾上配置到环境变量）[30M]
+
+2.下载https://github.com/tensorflow/models [400M]
+
+3.配置object_detection
+#打开CMD
+#到reseacher目录下,( export PYTHONPATH = $ PYTHONPATH：`pwd`：`pwd` / slim) or( set PYTHONPATH = $ PYTHONPATH：`pwd`：`pwd` / slim)
+#python setup.py install
+
+4.因为一个bug，要到reseacher目录的slim目录下
+python setup.py build
+python setup.py install
+
+5.然后去下载protoc,网站https://github.com/protocolbuffers/protobuf/releases
+
+6.然后利用protoc去执行命令
+D:\code\python\protoc_3.4\bin\protoc object_detection/protos/*.proto --python_out=.
+(如果你缺少vs，请去安装https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+
+7.然后先去获取一份重要的配置文件
+请到https://github.com/datitran/raccoon_dataset这个链接的training目录下去得到一份叫做training/ssd_mobilenet_v1_pets.config的文件
+
+8.最重要的一条命令
+python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
+
+9.你先使用这条命令，然后会报你一个错，并且帮你生成一个pipeline.config的配置文件，配置pipeline.config文件所需要的材料
+#请把当前train.py所在目录填入gs:// ${YOUR_GCS_BUCKET}以及它的前方
+
+10.然后开始制作pipeline.config所需要的材料
+#.在legacy目录下创建data文件夹，然后创建清单文件 object-detection.pbtxt。其中的内容可以仿照如下内容
+-------------------------------------------
+item {
+	id:1
+	name:"macncheese"
+}
+-------------------------------------------
+#然后准备开始制作 train.record与 test.record。它们最后将被放在data文件夹下，这两个文件是训练的原材料，一个是训练集，一个是测试集，我们需要进行制作
+@这两个文件可以由csv文件转化而来，而csv文件可以由xml文件转化而来。其中保留了训练图片的名字，以及其中重点元素的所在区域。
+@那我们需要先手动标记出xml文件，或者使用现成的record
+@假设我已经有了xml文件，那么该如何得到csv文件呢？请使用一个简单的工具，叫做xml_to_csv.py
+@提供一个github的网址https://github.com/datitran/raccoon_dataset/blob/master/xml_to_csv.py，到这里去获取就可以了
+@该文件的使用方式:首先你先创建一个images，然后在里面分别建立test和train文件夹，然后把你的那些图片以及所生成的xml文件都放在这两个目录下，并且把他们的副本放到images下
+-----------------------------------------------------------------
+def main():
+    image_path = os.path.join(os.getcwd(), 'annotations')
+    xml_df = xml_to_csv(image_path)
+    xml_df.to_csv('raccoon_labels.csv', index=None)
+    print('Successfully converted xml to csv.')
+-----------------------------------------------------------------
+To:
+-----------------------------------------------------------------
+def main():
+    for directory in ['train','test']:
+        image_path = os.path.join(os.getcwd(), 'images/{}'.format(directory))
+        xml_df = xml_to_csv(image_path)
+        xml_df.to_csv('data/{}_labels.csv'.format(directory), index=None)
+        print('Successfully converted xml to csv.')
+-----------------------------------------------------------------
+然后执行xml_to_csv.py，就会在你的data文件夹下生成两个csv文件
+----------------------------------------------------------------------
+然后https://github.com/datitran/raccoon_dataset/blob/master/generate_tfrecord.py 下去拿这个文件，这个文件把它创建在legacy文件夹下。
+并修改其中内容
+------------------
+# TO-DO replace this with label map
+def class_text_to_int(row_label):
+    if row_label == 'macncheese':
+        return 1
+    else:
+        None
+---------------
+然后在cmd中执行这个命令
+python3 generate_tfrecord.py --csv_input=data/test_labels.csv --output_path=data/test.record
+或者 
+python generate_tfrecord.py --csv_input=data/test_labels.csv --output_path=data/test.record
