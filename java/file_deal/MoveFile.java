@@ -1,6 +1,4 @@
-package asd;
-
-import java.io.BufferedReader;
+﻿import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +11,9 @@ public class MoveFile {
 
 	public static void main(String[] args) throws Exception {
 		boolean ok = true;
+
+		String s = File.separator;
+		
 		String src = "D:\\data\\machine_learn\\manhua";
 		String target = "D:\\code\\python\\models\\models-master\\research\\object_detection\\legacy\\images\\";
 		int cnt = 0;
@@ -21,24 +22,24 @@ public class MoveFile {
 		for(String man:mans) {
 			
 			System.out.println("man:"+man);
-			File f = new File(root.getPath()+"\\"+man);
+			File f = new File(root.getPath()+s+man);
 			
-			File bFile = new File(f.getPath()+"\\bb");
+			File bFile = new File(f.getPath()+s+"bb");
 			
 			String []vs = bFile.list();
 			for(String v:vs) {
-				File vFile = new File(bFile.getPath()+"\\"+v);
+				File vFile = new File(bFile.getPath()+s+v);
 				String[]pages = vFile.list();
 				for(String page:pages) {
 					if(page.endsWith("jpg")) {
-						File pFile = new File(vFile.getPath()+"\\"+page);
+						File pFile = new File(vFile.getPath()+s+page);
 						System.out.println(pFile.getPath());
 						String t = pFile.getPath();
-						String pageNum = t.substring(t.lastIndexOf("\\")+1,t.lastIndexOf("."));
-						File xmlFile = new File(vFile.getPath()+"\\outputs\\"+pageNum+".xml");
+						String pageNum = t.substring(t.lastIndexOf(s)+1,t.lastIndexOf("."));
+						File xmlFile = new File(vFile.getPath()+s+"outputs"+s+pageNum+".xml");
 						String rand = randString(32);
 						if(ok==true) {
-							String path = Math.random()>0.1?"train\\":"test\\";
+							String path = Math.random()>0.1?"train"+s:"test"+s;
 							String xmlTargetPath = target+path+rand+".xml";
 							String imgTargetPath = target+path+rand+".jpg";
 							System.out.println(xmlTargetPath);
@@ -69,12 +70,7 @@ public class MoveFile {
 		}
 		return result;
 	}
-	public static void main(String[]args,int a)throws Exception {
-		long start = System.currentTimeMillis();
-		copyImg(new File("D:\\data\\machine_learn\\manhua\\BT0000518976\\bb\\v2s1\\0001.jpg"),"D:\\0001.jpg");
-		System.out.println((System.currentTimeMillis()-start)+"is going");
-	//	System.out.println(randString(32));
-	}
+	
 	public static void copy(File source,String target) throws Exception{
 		FileInputStream in = new FileInputStream(source);
 		FileOutputStream out = new FileOutputStream(new File(target));
@@ -86,11 +82,11 @@ public class MoveFile {
 		
 	}
 	public static void copyImg(File source,String target)throws Exception {
-	//	File fileIn = new File("/Volumes/天涯古巷/回忆/照片/4班聚餐（15.12.26）/IMG_3830.JPG");
+
         File fileOut = new File(target);
         FileInputStream fileInputStream = new FileInputStream(source);
         FileOutputStream fileOutputStream = new FileOutputStream(fileOut,true);
-        //建立缓冲字节数组读存文件
+   
         byte[] buf = new byte[1024*3];
         while((fileInputStream.read(buf))!=-1)
         {

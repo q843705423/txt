@@ -90,6 +90,7 @@ python generate_tfrecord.py --csv_input=data/train_labels.csv --output_path=data
 记住，路径替换的时候，不要使用\而是使用/
 然后就是准备 model.ckpt 文件,你可以选择使用官网提供的一个例子ssd_mobilenet_v1_coco_2017_11_17
 它的下载地址在http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz
+(如果是linux，可以使用wget命令)
 并把它解压到 legacy 目录下
 然后修改其中一个文件变成 model.ckpt
 
