@@ -11,12 +11,22 @@ pip install pillow
 pip install lxml
 pip install jupyter
 pip install matplotlib
+pip install tensorflow
 @以上是几个需要安装的python模块，在进行物品识别中都会用到
 @pillow:可以进行简单的图像操作
 @lxml: 高速地文件格式化解析
 @jupyter:交互式笔记本，可以进行数据分析等
 @matplotlib：python的2D绘图库，用于机器学习的可视化显示
-
+----------------------------------------------------------------------------------
+安装tensorflow遇到问题
+Could not find a version that satisfies the requirement tensorflow (from versions: ) No matching distribution found for tensorflow
+报错原因:没有安装64位的python
+解决办法:卸载原来的python,重新安装64位的python
+如何查看安装python是多少位的。
+解决办法:cmd命令下输入python，看第1行。
+如何重新安装python
+先使用安装python的程序，再次点击可以选择卸载
+----------------------------------------------------------------------------------
 
 #前往 https://github.com/tensorflow/models ，进行下载(大约400MB)
 @有两种方式，如果你有安装git且配置了环境变量，你可以直接用git命令下载。
@@ -33,16 +43,7 @@ pip install matplotlib
 @此电脑（右键）->属性->高级系统设置（左键）->环境变量配置 （暂时神略）
 
 #然后重启cmd，进入models-master目录，输入jupyter notebook，启动一个网站
-----------------------------------------------------------------------------------
-安装tensorflow遇到问题
-Could not find a version that satisfies the requirement tensorflow (from versions: ) No matching distribution found for tensorflow
-报错原因:没有安装64位的python
-解决办法:卸载原来的python,重新安装64位的python
-如何查看安装python是多少位的。
-解决办法:cmd命令下输入python，看第1行。
-如何重新安装python
-先使用安装python的程序，再次点击可以选择卸载
-----------------------------------------------------------------------------------
+
 
 #进行喂食数据的准备，为了加快准备速度，推荐下载 https://github.com/tzutalin/labelImg 
 使用该工具，必须下载 pyQt4，并且保证你刚刚的确用pip安装过lxml
