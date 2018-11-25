@@ -1,21 +1,58 @@
 ﻿import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.nio.Buffer;
+import java.util.HashMap;
 
 public class MoveFile {
 
+	public static void hint() {
+		System.out.println("your need put like:");
+		System.out.println("java MoveFile in=D:\\machine_learn\\manhua out=D:\\code\\python\\models\\models-master\\research\\object_detection\\legacy\\images");
+		System.out.println("java MoveFile in=/root/machine_learning/manhua out=/root/models/research/object_detection/legacy/images/");
+	}
 	public static void main(String[] args) throws Exception {
+		
+		HashMap<String,String>argMap = new HashMap<String,String>();
+		for(String arg:args) {
+			String key_value[] = arg.split("=");
+			
+			if(key_value.length!=2) {
+				System.out.println("you have a error input param");
+				hint();
+				return;
+			}
+			argMap.put(key_value[0], key_value[1]);
+		}
+		
+		if(!argMap.keySet().contains("in")) {
+			System.out.println("your loss param in.");
+			hint();
+			return;
+		}
+		if(!argMap.keySet().contains("in")) {
+			System.out.println("your loss param out.");
+			hint();
+			return;
+		}
+		
+		
 		boolean ok = true;
-
+		
+		
 		String s = File.separator;
 		
-		String src = "D:\\data\\machine_learn\\manhua";
-		String target = "D:\\code\\python\\models\\models-master\\research\\object_detection\\legacy\\images\\";
+		String src = argMap.get("in");
+		String target =	argMap.get("out");
+		File targetDir = new File(target);
+		if(!targetDir.exists())targetDir.mkdirs();
+		
+		File testDir = new File(targetDir.getPath()+s+"test");
+		if(!testDir.exists())testDir.mkdirs();
+		File trainDir = new File(targetDir.getPath()+s+"train");
+		if(!trainDir.exists())trainDir.mkdirs();
 		int cnt = 0;
 		File root = new File(src);
 		String[] mans = root.list();
@@ -43,7 +80,7 @@ public class MoveFile {
 							String xmlTargetPath = target+path+rand+".xml";
 							String imgTargetPath = target+path+rand+".jpg";
 							System.out.println(xmlTargetPath);
-							copyXmlAndDeal(xmlFile, xmlTargetPath,imgTargetPath);
+							copyXmlAndDeal(xmlFile, xmlTargetPath,imgTargetPath,path+rand+".jpg");
 							copyImg(pFile,imgTargetPath );
 						}
 						
@@ -74,6 +111,7 @@ public class MoveFile {
 	public static void copy(File source,String target) throws Exception{
 		FileInputStream in = new FileInputStream(source);
 		FileOutputStream out = new FileOutputStream(new File(target));
+	
 		for(int i=in.read();i!=-1;i=in.read()) {
 			out.write(i);
 		}
@@ -96,7 +134,7 @@ public class MoveFile {
         fileInputStream.close();
 
 	}
-	public static void copyXmlAndDeal(File source,String target,String message)throws Exception{
+	public static void copyXmlAndDeal(File source,String target,String path,String filename)throws Exception{
 		BufferedReader br = new BufferedReader(new FileReader(source));
 		FileWriter fw = new FileWriter(new File(target));
 		String content = "";
@@ -104,10 +142,10 @@ public class MoveFile {
 			content+=s;
 		}
 		content = content.replace("字", "font");
-		System.out.println("m="+message);
-		String s = message.replace("\\", "/");
+		System.out.println("m="+path);
+		String s = path.replace("\\", "/");
 		content = content.replaceAll("\\<path\\>.*?\\</path\\>", "<path>"+s+"</path>");
-	//	System.out.println(content);
+		content = content.replaceAll("\\<filename\\>.*?\\</filename\\>", "<filename>"+filename+"</filename>");
 		fw.write(content);
 		br.close();
 		fw.close();

@@ -67,6 +67,9 @@ def main():
         print('Successfully converted xml to csv.')
 -----------------------------------------------------------------
 然后执行xml_to_csv.py，就会在你的data文件夹下生成两个csv文件
+pip install pandas (linux的3下要pip3 install pandas)
+然后
+python xml_to_csv.py (linux下要 python xml_to_csv.py)
 ----------------------------------------------------------------------
 然后https://github.com/datitran/raccoon_dataset/blob/master/generate_tfrecord.py 下去拿这个文件，这个文件把它创建在legacy文件夹下。
 并修改其中内容
@@ -99,6 +102,7 @@ python generate_tfrecord.py --csv_input=data/train_labels.csv --output_path=data
 10.再执行这个最重要的命令
 python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
 
+python3 train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
 
 
 
