@@ -1,0 +1,6 @@
+InvalidArgumentError (see above for traceback): You must feed a value for placeholder tensor 'Placeholder' with dtype float and shape [?,2]
+
+这个错误不容易发现，在进行机器学习的时候，
+如果你要run的数，它是由占位符生成的，那么就一定要使用feed_dict，
+其中，不仅仅包括sess.run(train,feed_dict={})
+还包括 sess.run(loss,feed_dict={})
