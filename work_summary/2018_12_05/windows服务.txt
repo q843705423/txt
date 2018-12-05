@@ -1,0 +1,6 @@
+启动服务
+net start $serviceName
+停止服务
+net stop $serviceName
+
+创建服务需要Instsrv.exe和Srvany.exe 两个exe

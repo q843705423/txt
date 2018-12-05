@@ -1,0 +1,11 @@
+https://github.com/tensorflow/tensorflow/blob/7c36309c37b04843030664cdc64aca2bb7d6ecaa/tensorflow/contrib/learn/python/learn/datasets/mnist.py#L189
+131-134：
+ if reshape:
+        assert images.shape[3] == 1
+        images = images.reshape(images.shape[0],
+                                images.shape[1] * images.shape[2])
+
+38行:
+def extract_images(f):
+
+传入一个f，可以解压
