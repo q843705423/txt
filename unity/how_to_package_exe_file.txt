@@ -1,0 +1,2 @@
+file -> build setting
+然后选择需要打包成的文件，然后就可以了。

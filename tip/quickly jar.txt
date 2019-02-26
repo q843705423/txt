@@ -1,0 +1,7 @@
+kill -9 $(lsof -i:7777 -t)
+cd cartoon_javaEE/
+git pull
+cd target/
+rm -f nohup.out
+nohup java 
+nohup java -jar myblob-0.0.1-SNAPSHOT.jar &

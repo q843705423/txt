@@ -7,13 +7,14 @@ int main()
 	long long ac;
   	scanf("%d",&t);
 	while(t--){
-		a = ac = 0;
+		a  = 0;
+		ac = 0;
 		scanf("%d%s",&n,s);
 		for(i=0;i<n;i++){
 			a += s[i]=='A'?1:0;
 			ac += s[i]=='C'?a:0;
 		}
-		printf("%lld",ac);
+		printf("%lld\n",ac);
 	}
    
    return 0;
