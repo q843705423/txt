@@ -1,0 +1,57 @@
+
+
+nnoremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <BS> <Nop>
+
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <BS> <Nop>
+
+
+noremap <Space>sw :action SurroundWith<CR>
+noremap <Space>= :action ReformatCode<CR>
+noremap <Space>spm :action ShowPopupMenu<CR>
+noremap <Space>fc :action ForceRunToCursor<CR>
+noremap <Space>gi :action GotoImplementation<CR>
+noremap <Space>bp :action ToggleLineBreakpoint<CR>
+noremap <Space>fip :action FindInPath<CR>
+noremap <Space>{ :action EditorCodeBlockStart<CR>
+noremap <Space>} :action EditorCodeBlockEnd<CR>
+
+"
+noremap <Space>tpm :action TogglePresentationMode<CR>
+
+noremap <Space>mh :action MethodHierarchy<CR>
+"hide all
+noremap <Space>ha :action HideAllWindows<CR>
+noremap <Space><Space> :action HideAllWindows<CR>
+"file structure
+noremap <Space>fs :action FileStructurePopup<CR>
+"save template
+noremap <Space>st :action SaveAsTemplate<CR>
+"error information
+noremap <Space>ei :action ShowErrorDescription<CR>
+"type information
+noremap <Space>ti :action ExpressionTypeInfo<CR>
+"parameter information
+noremap <Space>pi :action ParameterInfo<CR>
+
+noremap <Space>re :action RenameElement<CR>
+noremap <Space>ms :action MakeStatic<CR>
+noremap <Space>ci :action ConvertToInstanceMethod<CR>
+noremap <Space>mv :action Move<CR>
+noremap <Space>po :action IntroduceParameterObject<CR>
+noremap <Space>il :action Inline<CR>
+noremap <Space>ei :action ExtractInterface<CR>
+noremap <Space>em :action ExtractMethod<CR>
+noremap <Space>iv :action IntroduceVariable<CR>
+noremap <Space>ic :action IntroduceConstant<CR>
+noremap <Space>ef :action EncapsulateFields<CR>
+noremap <Space>rmo :action ReplaceMethodWithMethodObject<CR>
+
+
+
