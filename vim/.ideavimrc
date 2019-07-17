@@ -22,36 +22,72 @@ noremap <Space>fip :action FindInPath<CR>
 noremap <Space>{ :action EditorCodeBlockStart<CR>
 noremap <Space>} :action EditorCodeBlockEnd<CR>
 
-"
+"切换为演示模式,沉浸式体验
 noremap <Space>tpm :action TogglePresentationMode<CR>
 
+"方法结构
 noremap <Space>mh :action MethodHierarchy<CR>
-"hide all
+
+"隐藏所有窗口
 noremap <Space>ha :action HideAllWindows<CR>
 noremap <Space><Space> :action HideAllWindows<CR>
-"file structure
+
+"弹出文件结构
 noremap <Space>fs :action FileStructurePopup<CR>
-"save template
+
+"保存模板
 noremap <Space>st :action SaveAsTemplate<CR>
-"error information
-noremap <Space>ei :action ShowErrorDescription<CR>
-"type information
+
+"弹出警告信息
+noremap <Space>ed :action ShowErrorDescription<CR>
+"弹出类型信息
 noremap <Space>ti :action ExpressionTypeInfo<CR>
-"parameter information
+"弹出参数信息
 noremap <Space>pi :action ParameterInfo<CR>
 
+"修改变量或方法名
 noremap <Space>re :action RenameElement<CR>
+
+"成员变静态
 noremap <Space>ms :action MakeStatic<CR>
+"静态变成员
 noremap <Space>ci :action ConvertToInstanceMethod<CR>
+
+"移动
 noremap <Space>mv :action Move<CR>
-noremap <Space>po :action IntroduceParameterObject<CR>
+
+"内联
 noremap <Space>il :action Inline<CR>
+
+"抽取接口
 noremap <Space>ei :action ExtractInterface<CR>
+
+"抽取方法
 noremap <Space>em :action ExtractMethod<CR>
-noremap <Space>iv :action IntroduceVariable<CR>
-noremap <Space>ic :action IntroduceConstant<CR>
+
+"字段的访问限制
 noremap <Space>ef :action EncapsulateFields<CR>
+"切换方法为方法对象
 noremap <Space>rmo :action ReplaceMethodWithMethodObject<CR>
 
+"引入临时变量
+noremap <Space>iv :action IntroduceVariable<CR>
+"引入常量
+noremap <Space>ic :action IntroduceConstant<CR>
+"引入方法参数
+noremap <Space>ip :action IntroduceParameter<CR>
+"引入字段
+noremap <Space>if :action IntroduceField<CR>
+"引入参数对象(指定参数)
+noremap <Space>po :action IntroduceParameterObject<CR>
 
+"方法下放到子类
+noremap <Space>pd :action MemberPushDown<CR>
+"方法上移到父类
+noremap <Space>pu :action MembersPullUp<CR>
+
+"添加新的观察
+noremap <Space>daw :action Debugger.AddToWatch<CR>
+
+ 
 
