@@ -3,7 +3,7 @@ firewall-cmd --reload
 
 yum install java-1.8.0-openjdk* -y
 
-git yum -y install git
+yum -y install git
 cd /root
 git clone https://github.com/q843705423/txt
 
