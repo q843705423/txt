@@ -1,12 +1,7 @@
 
 
-nnoremap <Down> <Nop>
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
-nnoremap <BS> <Nop>
 
-inoremap <Up> <Nop>
-inoremap <Down> <Nop>
+
 inoremap <Left> <Nop>
 inoremap <Right> <Nop>
 inoremap <BS> <Nop>
@@ -89,5 +84,37 @@ noremap <Space>pu :action MembersPullUp<CR>
 "添加新的观察
 noremap <Space>daw :action Debugger.AddToWatch<CR>
 
- 
+"重复上次debug
+noremap <Space>dd :action Debug<CR>
+
+"debug当前(now)类
+noremap <Space>dn :action DebugClass<CR>
+
+"运行上个类
+noremap <Space>rr :action Run<CR>
+
+
+"运行当前类
+noremap <Space>rn :action RunClass<CR>
+
+"统计运行当前类
+noremap <Space>cn :action RunCoverage<CR>
+
+"统计运行上个类
+noremap <Space>cc :action Coverage<CR>
+
+"跑到下个报错处
+noremap <Space>ne :action GotoNextError<CR>
+
+"跑到上个报错处
+noremap <Space>pe :action GotoPreviousError<CR>
+
+"创建/跑到它的测试方法
+noremap <Space>gt :action GotoTest<CR>
+
+"优化导入
+noremap <Space>oi :action OptimizeImports<CR>
+
+
+
 
