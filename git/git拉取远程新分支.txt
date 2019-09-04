@@ -1,0 +1,4 @@
+git fetch
+
+
+git checkout -b 本地分支名 origin/远程分支名
