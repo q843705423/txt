@@ -11,7 +11,7 @@ w = curses.newwin(sh, sw, 0, 0)
 
 w.keypad(1)
 w.timeout(200)
-words = ["hello", "world", "cool", "and", "evening", "bad", "better"]
+words = ["public", "static", "void", "main", "String", "Valid", "value", "RequestBody"]
 wordlen = len(words)
 flyword = []
 
@@ -54,10 +54,10 @@ while True:
                 pos += 1
             if maxX != -1:
 
+                goal += len(myInput)
                 w.addstr(28,1,"input:"+" "*10)
                 myInput = ""
-                goal += 2
-                maxNumber += int(goal / 10)
+                maxNumber += 2
                 w.addstr(flyword[realPos]["y"],flyword[realPos]["x"],flyword[realPos]["len"] * " ")
                 del flyword[realPos]
 
