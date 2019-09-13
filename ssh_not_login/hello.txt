@@ -1,0 +1,13 @@
+打开cmd
+ssh_keygen -t rsa
+会在C盘的Users的你名字的目录下生成
++ id_rsa
+- id_pub
+两个文件
+
+将其中的id_pub 放到你的linux的
+/root/.ssh/authorized_keys
+文件夹下,就可以实现免密码登录
+
+
+
