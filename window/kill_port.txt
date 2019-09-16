@@ -1,0 +1,2 @@
+taskkill /pid 4136 -t -f
+taskkill /pid  ½ø³ÌºÅ -t -f
