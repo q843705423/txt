@@ -1,0 +1,2 @@
+copy /b E:\temps\*.ts E:\temps\new.ts
+copy /b D:\movie\blueMovie\qiusezhikong\*.ts D:\movie\blueMovie\new.ts
