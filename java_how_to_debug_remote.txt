@@ -1,0 +1,7 @@
+在java中， 如何使用java对在不同的机子上面的程序进行debug调试,
+
+首先，在IDEA-》edit configurations
+dialog,选择remote。然后让被调试的程序添加上那句话，类似于
+-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+然后在本地使用debug方式启动
+就可以进行调试了
