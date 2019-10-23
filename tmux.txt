@@ -1,0 +1,14 @@
+sudo apt-get install tmux
+
+tmux
+
+ctrl+b      to do something
+ctrl+b  c    creaete new window
+ctrl+b  p   preious
+ctrl+b  n   next
+ctrl+b  w   window
+ctrl+b %   split screen
+ctrl+b :     
+
+$ tmun new -s backupsession 
+$ tmux list-sessions

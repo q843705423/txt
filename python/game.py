@@ -11,7 +11,7 @@ w = curses.newwin(sh, sw, 0, 0)
 
 w.keypad(1)
 w.timeout(200)
-words = ["public", "static", "void", "main", "String", "Valid", "value", "RequestBody"]
+words = ["1", "2", "3", "4", "5", "6", "7", "8","9","0"]
 wordlen = len(words)
 flyword = []
 

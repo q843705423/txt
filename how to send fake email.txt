@@ -1,0 +1,37 @@
+按win键
+
+输入 cmd
+
+按 enter 回车
+
+telnet mx2.hotmail.com 25
+
+echo off & title telnet fake email
+
+telnet mx2.hotmail.com 25
+
+telnet smtp.qq.com 25
+
+ehlo hello
+
+MAIL FROM: 1040971361@qq.com
+RCPT TO: 843705423@qq.com
+DATA
+SUBJECT: It's me!
+FROM: qiqi.chen <1040971361@qq.com>
+TO: Beam Sum <1040971361@qq.com>
+
+hello world,hello myself
+.
+kpbdsqallsmjbdee
+a3BiZHNxYWxsc21qYmRlZQ==
+
+
+ODQzNzA1NDIzQHFxLmNvbQ==
+NjQ1MTc1MTAr
+
+https://www.youtube.com/watch?v=9108l6HJhj8
+.
+
+网易邮箱: MTU4NTgyOTMwOTJAMTYzLmNvbQ==
+邮箱解密: QWRtaW4xMjM0NTY=
